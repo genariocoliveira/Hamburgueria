@@ -23,6 +23,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    /* position: fixed;
+    width: 100%; */
 }
 #nav #logo-url{
     margin: auto;

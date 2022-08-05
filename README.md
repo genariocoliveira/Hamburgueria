@@ -5,6 +5,16 @@
 npm install
 ```
 
+### Install Json Server
+```
+npm install json-server
+```
+
+### Compiles and hot-reloads for development 
+```
+npm run backend
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve

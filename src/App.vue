@@ -46,3 +46,5 @@ h1{
 }
 </style>
 <!-- Comando para iniciar o server backend = npm run backend -->
+
+<!-- Install json server = npm install json-server -->

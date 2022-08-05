@@ -125,6 +125,7 @@ export default {
 }
 
 label{
+    font-size: 20px;
     font-weight: bold;
     margin-bottom: 15px;
     color: #222;
@@ -133,8 +134,9 @@ label{
 }
 
 input, select{
+    font-size: 18px;
     padding: 5px 10px;
-    width: 300px;
+    width: 400px;
 }
 
 #opcionais-container{
@@ -160,6 +162,7 @@ input, select{
 
 .checkbox-container span{
     font-weight: bold;
+    font-size: 18px;
     margin-left: 6px;
 }
 
@@ -169,7 +172,7 @@ input, select{
     font-weight: bold;
     border: 2px solid #222;
     padding: 10px;
-    font-size: 16px;
+    font-size: 22px;
     margin: 0 auto;
     cursor: pointer;
     transition: .5s;

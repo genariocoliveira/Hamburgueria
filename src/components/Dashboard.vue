@@ -1,5 +1,6 @@
 <template>
     <div id="burger-table">
+        <Message :msg="msg" v-show="msg" />
         <div>
             <div id="burger-table-heading">
                 <div class="order-id">#:</div>
@@ -24,10 +25,11 @@
                     </ul>
                 </div>
                 <div>
-                    <select name="status" class="status">
+                    <select name="status" class="status" @change="updateBurger($event, burger.id)">
                         <option value="">Status</option>
+                        <option v-for="s in status" :key="s.id" value="s.tipo" :selected="burger.status == s.tipo">{{s.tipo}}</option>
                     </select>
-                    <button class="delete-btn">Cancelar</button>
+                    <button class="delete-btn" @click="deleteBurger(burger.id)">Cancelar</button>
                 </div>
             </div>
         </div>
@@ -35,13 +37,18 @@
 </template>
 
 <script>
+import Message from './Message.vue';
 export default {
     name: 'Dashboard',
+    components: {
+        Message
+    },
     data() {
         return{
             burgers: null,
             burger_id: null,
-            status: []
+            status: [],
+            msg: null
         }
     },
     methods: {
@@ -56,6 +63,54 @@ export default {
                 console.log(this.burgers);
                 
                 // resgatar ps status
+                
+                this.getStatus();
+
+            },
+            async getStatus() {
+                const req = await fetch('http://localhost:3000/status');
+
+                const data = await req.json();
+
+                this.status = data;
+
+                console.log(data);
+            },
+            async deleteBurger(id) {
+                
+                const req = await fetch(`http://localhost:3000/burgers/${id}`, {
+                    method: 'DELETE'
+                });
+
+                const res = await req.json();
+
+                //msg 
+                this.msg = `Pedido removido com sucesso!`;
+
+                //Clear msg
+                setTimeout(() => this.msg = '', 3000);
+
+                this.getPedidos();
+            },
+            async updateBurger(event, id) {
+                
+                const option = event.target.value;
+
+                const dataJson = JSON.stringify({ status: option });
+
+                const req = await fetch(`http://localhost:3000/burgers/${id}`, {
+                    method: 'PATCH',
+                    headers: { "Content-Type": "application/json" },
+                    body: dataJson
+                });
+
+                const res = await req.json();
+
+                //msg 
+                this.msg = `O pedido Nº ${res.id} foi atualizado!`;
+
+                //Clear msg
+                setTimeout(() => this.msg = '', 3000);
 
             }
         },
@@ -80,6 +135,7 @@ export default {
 }
 
 #burger-table-heading {
+    font-size: 22px;
     font-weight: bold;
     padding: 12px;
     border-bottom: 3px solid #333;
@@ -91,6 +147,7 @@ export default {
 }
 
 .burger-table-row{
+    font-size: 18px;
     width: 100%;
     padding: 12px;
     border-bottom: 1px solid #ccc;
